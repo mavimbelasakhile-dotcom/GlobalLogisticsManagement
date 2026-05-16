@@ -1,0 +1,2 @@
+# GlobalLogisticsManagement
+Assignment Enterprise Programming Semester1
