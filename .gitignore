@@ -1,0 +1,29 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio
+.vs/
+*.rsuser
+[Dd]ebug/
+[Rr]elease/
+
+## User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+
+## Uploads folder (runtime files)
+Uploads/
+
+## OS files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,6 @@
+@GlobalLogisticsManagementSystemAPI_HostAddress = http://localhost:5110
+
+GET {{GlobalLogisticsManagementSystemAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
