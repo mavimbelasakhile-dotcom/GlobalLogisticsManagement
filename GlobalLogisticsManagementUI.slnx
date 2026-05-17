@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="GlobalLogisticsManagementUI/GlobalLogisticsManagementUI.csproj" />
   <Project Path="GlobalLogisticsManagementUI.Tests/GlobalLogisticsManagementUI.Tests.csproj" />
-  <Project Path="../GlobalLogisticsManagementSystemAPI/GlobalLogisticsManagementSystemAPI/GlobalLogisticsManagementSystemAPI.csproj" />
 </Solution>
