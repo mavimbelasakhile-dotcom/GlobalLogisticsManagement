@@ -1,0 +1,106 @@
+@model IEnumerable<GlobalLogisticsManagementUI.Models.ContractViewModel>
+@{
+    ViewData["Title"] = "Contracts";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Contract Management</h2>
+    <a asp-action="Create" class="btn btn-primary">+ New Contract</a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <form method="get" asp-action="Index" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small fw-semibold">Start Date (From)</label>
+                <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small fw-semibold">End Date (To)</label>
+                <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small fw-semibold">Status</label>
+                <select name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="0" selected="@(ViewBag.Status == 0)">Draft</option>
+                    <option value="1" selected="@(ViewBag.Status == 1)">Active</option>
+                    <option value="2" selected="@(ViewBag.Status == 2)">Expired</option>
+                    <option value="3" selected="@(ViewBag.Status == 3)">On Hold</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-dark me-2">Filter</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Client</th>
+                <th>Service Level</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Agreement</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contract in Model)
+            {
+                <tr>
+                    <td>@contract.Id</td>
+                    <td>@(contract.Client?.Name ?? "N/A")</td>
+                    <td>@contract.ServiceLevel</td>
+                    <td>@contract.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@contract.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <span class="badge @GetStatusBadge(contract.Status)">@contract.StatusDisplay</span>
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(contract.SignedAgreementPath))
+                        {
+                            <a asp-action="Download" asp-route-id="@contract.Id" class="btn btn-sm btn-outline-success">📄 Download</a>
+                        }
+                        else
+                        {
+                            <span class="text-muted small">Not attached</span>
+                        }
+                    </td>
+                    <td class="text-end text-nowrap">
+                        <a asp-action="Details" asp-route-id="@contract.Id" class="btn btn-sm btn-outline-info">View</a>
+                        <a asp-action="Edit" asp-route-id="@contract.Id" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@contract.Id" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">
+        No contracts found matching your criteria.
+    </div>
+}
+
+@functions {
+    string GetStatusBadge(int status) => status switch
+    {
+        0 => "bg-secondary",
+        1 => "bg-success",
+        2 => "bg-danger",
+        3 => "bg-warning text-dark",
+        _ => "bg-secondary"
+    };
+}

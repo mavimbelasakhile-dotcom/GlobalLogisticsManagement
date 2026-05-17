@@ -1,0 +1,39 @@
+@model GlobalLogisticsManagementUI.Models.ClientCreateViewModel
+@{
+    ViewData["Title"] = "Create Client";
+}
+
+<h2>Add New Client</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Client Name</label>
+                <input asp-for="Name" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ContactDetails" class="form-label">Contact Details</label>
+                <input asp-for="ContactDetails" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Region" class="form-label">Region</label>
+                <input asp-for="Region" class="form-control" />
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Create Client</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var recentContracts = ViewBag.RecentContracts as IEnumerable<GlobalLogisticsManagementUI.Models.ContractViewModel> ?? Enumerable.Empty<GlobalLogisticsManagementUI.Models.ContractViewModel>();
+    var recentRequests = ViewBag.RecentRequests as IEnumerable<GlobalLogisticsManagementUI.Models.ServiceRequestViewModel> ?? Enumerable.Empty<GlobalLogisticsManagementUI.Models.ServiceRequestViewModel>();
+}
+
+<!-- Hero Section -->
+<div class="bg-dark text-white rounded-3 p-5 mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold">Global Logistics Management</h1>
+            <p class="lead mb-0 opacity-75">TechMove Logistics — Contract & Service Management Platform</p>
+        </div>
+        <div class="d-none d-md-block">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="opacity-50" viewBox="0 0 16 16">
+                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-primary" viewBox="0 0 16 16">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-.779.357-1.85 1.084-2.72.6-.718 1.5-1.272 2.852-1.272.178 0 .35.007.516.02-.02-.048-.038-.097-.054-.146z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalClients</h3>
+                    <small class="text-muted">Total Clients</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalContracts</h3>
+                    <small class="text-muted">Contracts (<span class="text-success">@ViewBag.ActiveContracts active</span>)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.TotalRequests</h3>
+                    <small class="text-muted">Service Requests</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-danger bg-opacity-10 p-3 me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-danger" viewBox="0 0 16 16">
+                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                        <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">@ViewBag.PendingRequests</h3>
+                    <small class="text-muted">Pending Requests</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions + Recent Activity -->
+<div class="row g-4 mb-4">
+    <!-- Quick Actions -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-3">
+                <h5 class="fw-semibold mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-controller="Clients" asp-action="Create" class="btn btn-outline-primary text-start">
+                        <span class="me-2">+</span> Add New Client
+                    </a>
+                    <a asp-controller="Contracts" asp-action="Create" class="btn btn-outline-success text-start">
+                        <span class="me-2">+</span> Create Contract
+                    </a>
+                    <a asp-controller="ServiceRequests" asp-action="Create" class="btn btn-outline-info text-start">
+                        <span class="me-2">+</span> New Service Request
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Contracts -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-3 d-flex justify-content-between align-items-center">
+                <h5 class="fw-semibold mb-0">Recent Contracts</h5>
+                <a asp-controller="Contracts" asp-action="Index" class="btn btn-sm btn-link">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    @foreach (var contract in recentContracts)
+                    {
+                        <a asp-controller="Contracts" asp-action="Details" asp-route-id="@contract.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="fw-semibold">Contract #@contract.Id</small>
+                                <br /><small class="text-muted">@(contract.Client?.Name ?? "N/A")</small>
+                            </div>
+                            <span class="badge @GetStatusBadge(contract.Status)">@contract.StatusDisplay</span>
+                        </a>
+                    }
+                    @if (!recentContracts.Any())
+                    {
+                        <div class="list-group-item text-center text-muted py-4">No contracts yet</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Service Requests -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-3 d-flex justify-content-between align-items-center">
+                <h5 class="fw-semibold mb-0">Recent Requests</h5>
+                <a asp-controller="ServiceRequests" asp-action="Index" class="btn btn-sm btn-link">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    @foreach (var request in recentRequests)
+                    {
+                        <a asp-controller="ServiceRequests" asp-action="Details" asp-route-id="@request.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="fw-semibold">Request #@request.Id</small>
+                                <br /><small class="text-muted text-truncate d-inline-block" style="max-width: 150px;">@request.Description</small>
+                            </div>
+                            <span class="badge @GetRequestStatusBadge(request.Status)">@request.StatusDisplay</span>
+                        </a>
+                    }
+                    @if (!recentRequests.Any())
+                    {
+                        <div class="list-group-item text-center text-muted py-4">No requests yet</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadge(int status) => status switch
+    {
+        0 => "bg-secondary",
+        1 => "bg-success",
+        2 => "bg-danger",
+        3 => "bg-warning text-dark",
+        _ => "bg-secondary"
+    };
+
+    string GetRequestStatusBadge(int status) => status switch
+    {
+        0 => "bg-warning text-dark",
+        1 => "bg-primary",
+        2 => "bg-success",
+        3 => "bg-danger",
+        _ => "bg-secondary"
+    };
+}

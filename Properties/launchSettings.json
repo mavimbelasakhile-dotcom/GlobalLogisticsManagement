@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Start API + UI": {
+      "commandName": "SolutionLaunch",
+      "projects": [
+        {
+          "name": "../GlobalLogisticsManagementSystemAPI/GlobalLogisticsManagementSystemAPI/GlobalLogisticsManagementSystemAPI.csproj",
+          "action": "start"
+        },
+        {
+          "name": "GlobalLogisticsManagementUI/GlobalLogisticsManagementUI.csproj",
+          "action": "start",
+          "launchBrowser": true
+        }
+      ]
+    }
+  }
+}
