@@ -16,6 +16,8 @@ builder.Services.AddSession(options =>
 
 var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5110/";
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddHttpClient<IContractService, ContractService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
