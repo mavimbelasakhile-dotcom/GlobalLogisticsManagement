@@ -1,5 +1,6 @@
 using GlobalLogisticsManagementSystemAPI.Data;
 using GlobalLogisticsManagementSystemAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace GlobalLogisticsManagementSystemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ContractController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -18,11 +20,25 @@ namespace GlobalLogisticsManagementSystemAPI.Controllers
             _env = env;
         }
 
-        // GET: api/Contract
+        // GET: api/Contract (with filtering)
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Contract>>> GetContracts()
+        public async Task<ActionResult<IEnumerable<Contract>>> GetContracts(
+            [FromQuery] int? clientId,
+            [FromQuery] ContractStatus? status,
+            [FromQuery] string? serviceLevel)
         {
-            return await _context.Contracts.Include(c => c.Client).ToListAsync();
+            var query = _context.Contracts.Include(c => c.Client).AsQueryable();
+
+            if (clientId.HasValue)
+                query = query.Where(c => c.ClientId == clientId.Value);
+
+            if (status.HasValue)
+                query = query.Where(c => c.Status == status.Value);
+
+            if (!string.IsNullOrEmpty(serviceLevel))
+                query = query.Where(c => c.ServiceLevel.Contains(serviceLevel));
+
+            return await query.ToListAsync();
         }
 
         // GET: api/Contract/5
@@ -100,6 +116,23 @@ namespace GlobalLogisticsManagementSystemAPI.Controllers
         private bool ContractExists(int id)
         {
             return _context.Contracts.Any(e => e.Id == id);
+        }
+
+        // PATCH: api/Contract/5/status (approve/decline)
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateContractStatus(int id, [FromBody] ContractStatusUpdateDto dto)
+        {
+            var contract = await _context.Contracts.FindAsync(id);
+            if (contract == null)
+                return NotFound();
+
+            if (!Enum.TryParse<ContractStatus>(dto.Status, true, out var newStatus))
+                return BadRequest($"Invalid status. Valid values: {string.Join(", ", Enum.GetNames<ContractStatus>())}");
+
+            contract.Status = newStatus;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = $"Contract status updated to '{newStatus}'.", contract });
         }
 
         // POST: api/Contract/5/upload

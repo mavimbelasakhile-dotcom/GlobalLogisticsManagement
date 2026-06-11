@@ -1,6 +1,7 @@
 using GlobalLogisticsManagementSystemAPI.Data;
 using GlobalLogisticsManagementSystemAPI.Models;
 using GlobalLogisticsManagementSystemAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace GlobalLogisticsManagementSystemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServiceRequestController : ControllerBase
     {
         private readonly AppDbContext _context;
