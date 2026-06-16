@@ -14,6 +14,9 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<TokenHandler>();
+
 var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5110/";
 
 builder.Services.AddHttpClient();
@@ -21,17 +24,17 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IContractService, ContractService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
-});
+}).AddHttpMessageHandler<TokenHandler>();
 
 builder.Services.AddHttpClient<IServiceRequestService, ServiceRequestService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
-});
+}).AddHttpMessageHandler<TokenHandler>();
 
 builder.Services.AddHttpClient<IClientService, ClientService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
-});
+}).AddHttpMessageHandler<TokenHandler>();
 
 var app = builder.Build();
 

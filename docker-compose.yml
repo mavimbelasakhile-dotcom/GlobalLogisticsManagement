@@ -16,13 +16,14 @@ services:
 
   glms-backend-api:
     build:
-      context: ../GlobalLogisticsManagementSystemAPI
-      dockerfile: GlobalLogisticsManagementSystemAPI/Dockerfile
+      context: ../GlobalLogisticsManagementSystemAPI/GlobalLogisticsManagementSystemAPI
+      dockerfile: Dockerfile
     container_name: glms-backend-api
     ports:
       - "5110:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__DefaultConnection=Server=sql-server-db;Database=GlobalLogisticsManagementDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true
     depends_on:
       - sql-server-db
@@ -38,6 +39,7 @@ services:
       - "5053:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
       - ApiSettings__BaseUrl=http://glms-backend-api:80/
     depends_on:
       - glms-backend-api
